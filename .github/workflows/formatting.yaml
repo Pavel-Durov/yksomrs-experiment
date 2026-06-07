@@ -1,0 +1,25 @@
+name: Formatting
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  check_fmt:
+    name: Check code formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: default
+          toolchain: stable
+      - name: Check formatting
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
